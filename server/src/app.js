@@ -1,4 +1,6 @@
 import { authRateLimit } from "./middleware/authRateLimit.js";
+import { fileURLToPath } from "node:url";
+import { join, sep } from "node:path";
 import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
@@ -9,6 +11,8 @@ import moodRoutes from "./routes/moodRoutes.js";
 export function createApp({
   clientOrigin = process.env.CLIENT_ORIGIN || "http://127.0.0.1:5173",
   trustProxy = false,
+  serveClient = false,
+  clientDirectory = fileURLToPath(new URL("../../client/dist/", import.meta.url)),
 } = {}) {
   const app = express();
   app.disable("x-powered-by");
@@ -33,6 +37,22 @@ export function createApp({
   app.get("/api/health", (_request, response) => {
     response.json({ data: { status: "ok", service: "MoodGarden API" } });
   });
+  if (serveClient) {
+    app.use(express.static(clientDirectory, {
+      index: false,
+      setHeaders(res, path) {
+        res.set("Cache-Control", path.startsWith(join(clientDirectory, "assets") + sep)
+          ? "public, max-age=31536000, immutable"
+          : "no-cache");
+      },
+    }));
+    app.get(/.*/, (req, res, next) => {
+      if (req.path === "/api" || req.path.startsWith("/api/") ||
+        req.path.startsWith("/assets/") || !req.accepts("html")) return next();
+      res.set("Cache-Control", "no-cache");
+      res.sendFile(join(clientDirectory, "index.html"));
+    });
+  }
   app.use((_request, response) =>
     response
       .status(404)

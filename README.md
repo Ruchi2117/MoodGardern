@@ -16,23 +16,23 @@ A cozy mood-tracking and journaling app where your feelings become a little gard
 
 ## Screenshots
 
-### Landing
+### A feeling becomes a plant
 
-![MoodGarden landing](docs/final-landing-1440.png)
+![A real mood submission growing the garden](docs/showcase/garden-growing.gif)
 
-### Garden
+### Your little sanctuary
 
-![Personal garden and daily rituals](docs/final-dashboard-1440.png)
+![Personal garden](docs/showcase/garden.png)
 
-### Journal
+### Thoughts, care, and a little look back
 
-![Saved thoughts in the journal](docs/final-journal-1440.png)
+![Saved thoughts in the journal](docs/showcase/journal.png)
 
-### Insights
+![Completed daily rituals](docs/showcase/rituals.png)
 
-![Gentle mood insights](docs/final-insights-1440.png)
+![Insights from saved check-ins](docs/showcase/insights.png)
 
-Mobile screenshots and the final review record are in [docs](docs/). Screenshot content uses local demonstration accounts.
+These five assets show the running app with fictional local demo entries. The GIF records an actual successful API-backed submission, not a mock animation. More mobile screenshots and review evidence are in [docs](docs/).
 
 ## Tech Stack
 
@@ -91,7 +91,7 @@ docs/                Screenshots and final review evidence
 Requirements: **Node.js 22.12+** (tested with Node 24), npm, and a MongoDB connection. PowerShell commands are shown; on macOS/Linux use `cp` instead of `Copy-Item`.
 
 ```powershell
-git clone <your-repository-url> MoodGarden
+git clone https://github.com/Ruchi2117/MoodGardern.git MoodGarden
 cd MoodGarden
 npm ci
 Copy-Item server/.env.example server/.env
@@ -117,6 +117,7 @@ Put the result in your local environment file. Never commit it. Set MONGODB_URI 
 | CLIENT_ORIGIN | Server             | Exact frontend origin; required in production, no path/trailing slash               |
 | HOST          | Server             | Optional; defaults to 127.0.0.1 locally and 0.0.0.0 in production                   |
 | TRUST_PROXY   | Server             | Optional trusted proxy-hop count (1–10); omit for direct access                     |
+| SERVE_CLIENT  | Server             | Set true to serve the built React client and browser routes from Express            |
 | VITE_API_URL  | Client, build time | Empty uses same-origin /api; split hosting uses a full HTTPS API URL ending in /api |
 
 Only VITE_API_URL is public client configuration. Never place database credentials or JWT secrets in a VITE_ variable. Both .env.example files are tracked; actual .env files are ignored.
@@ -185,13 +186,15 @@ npm run build
 npm audit --omit=dev
 ```
 
-**44 API tests** cover all original 38 cases plus six production/security tests: auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, missing energy, ties, streaks, timezones, CORS, headers, safe errors, environment validation, and auth limiting.
+**47 API tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, missing energy, ties, streaks, timezones, CORS, headers, safe errors, environment validation, auth limiting, production SPA routing and asset caching. GitHub Actions runs checks, tests and the production build on pushes and pull requests.
 
 The test runner uses isolated MongoDB instances and never modifies your application database. First use may download MongoDB. Final browser review covered all six page routes at 320, 375, 390, 430, 768, 1024, 1280, and 1440 pixels; keyboard dialogs/focus/Escape; long notes; empty/single/capped gardens; outage retry states; account isolation; and a simulated expired-session response. See [final review](docs/final-review.md) and [responsive measurements](docs/final-responsive-audit.json).
 
 ## Production Deployment
 
-No remote deployment has been provisioned. To deploy:
+The submission has a **$0 hosting budget**. [Free deployment instructions](docs/free-deployment.md) describe Render Free plus Atlas M0, with no paid resources or payment method. `render.yaml` selects a free single-service Docker deployment. Live provisioning is pending account access; no public URL is claimed yet.
+
+For same-origin deployment, Express serves the built client when `SERVE_CLIENT=true`; leave `VITE_API_URL` empty. For other deployment arrangements:
 
 1. Provision a managed MongoDB database with authentication, backups, TLS, and appropriately restricted network access.
 2. Run the backend on a Node-capable host. Set NODE_ENV=production, MONGODB_URI, a fresh JWT_SECRET, PORT, and the exact HTTPS CLIENT_ORIGIN. Use HOST=0.0.0.0 when the host requires it. Set TRUST_PROXY only to the known hop count of the reverse proxy that strips untrusted forwarded headers.
@@ -221,6 +224,12 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 
 **Feelings become plants, and small rituals become acts of care.** Every mood has room in the garden. Rituals are invitations, with no penalties for missed days. Insights describe what was recorded; they do not diagnose or interpret emotional health.
 
+## Explaining the project
+
+- [Two-minute architecture explanation and live demo outline](docs/architecture-talk.md)
+- [Why I built it this way: interview answers and tradeoffs](docs/design-decisions.md)
+- [Recruiter submission review](docs/submission-review.md)
+
 ## Known Limitations and Future Improvements
 
 - History is unpaginated for this assessment-sized dataset; explicit pagination is the main scaling improvement. Visible garden rendering stays capped at 12 plants.
@@ -232,11 +241,14 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 
 ## Submission Checklist
 
-- [x] Core MERN functionality and all 44 API tests
+- [x] Core MERN functionality and all 47 API tests
 - [x] Production build and code checks
 - [x] Accessibility/contrast and responsive review
 - [x] Local secrets, database files, dependencies, and generated builds excluded from Git
 - [ ] Actual Kiro or Code0 evidence required by the assessment
-- [ ] Configure the candidate’s GitHub remote and publish the reviewed repository
+- [x] Five real showcase screenshots/GIFs and an architecture walkthrough
+- [x] Configure the candidate’s GitHub remote
+- [ ] Publish the reviewed repository and verify remote CI
+- [ ] Provision and smoke-test a free public deployment
 
-No GitHub remote or live deployment is configured in this workspace. The local project can be reviewed and run with the commands above.
+Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern). A live deployment and genuine Kiro review are pending account sign-in. The local project can be reviewed and run with the commands above.

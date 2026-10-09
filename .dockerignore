@@ -1,0 +1,11 @@
+.git
+node_modules
+**/node_modules
+.local
+**/.env
+**/.env.*
+!**/.env.example
+client/dist
+**/*.tsbuildinfo
+docs
+.gitignore

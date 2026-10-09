@@ -31,7 +31,9 @@ export function readEnvironment(env = process.env) {
     throw new Error(
       "TRUST_PROXY must be the known number of reverse-proxy hops (1–10), or omitted.",
     );
+  const serveClient = env.SERVE_CLIENT === "true";
   return {
+    serveClient,
     port,
     host: env.HOST || (production ? "0.0.0.0" : "127.0.0.1"),
     clientOrigin,

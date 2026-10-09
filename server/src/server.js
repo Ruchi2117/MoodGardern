@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { access } from "node:fs/promises";
 import mongoose from "mongoose";
 import { createApp } from "./app.js";
 import { connectDatabase } from "./config/db.js";
@@ -7,6 +8,8 @@ import User from "./models/User.js";
 import Ritual from "./models/Ritual.js";
 import MoodEntry from "./models/MoodEntry.js";
 const config = readEnvironment();
+if (config.serveClient)
+  await access(new URL("../../client/dist/index.html", import.meta.url));
 await connectDatabase(config.mongodbUri);
 await Promise.all([User.init(), MoodEntry.init(), Ritual.init()]);
 const server = createApp(config).listen(config.port, config.host, () =>
