@@ -1,6 +1,6 @@
 # Genuine Kiro/Code0 review tasks
 
-Status: prepared prompts, **not evidence of completed tool usage**. The initial implementation used Codex. Run these tasks in the required tool, preserve its actual responses, review the findings, and record what was accepted/rejected and how it was verified.
+These are the prepared prompt scopes. Four genuine Kiro CLI reviews are now recorded in [actual evidence](kiro-review.md), with responses and accepted/rejected decisions. The initial implementation used Codex.
 
 Never give the tool .env files, credentials, local database files, node_modules, generated builds, or private journal data. Review source and isolated tests only. Do not add product features or redesign the approved garden.
 

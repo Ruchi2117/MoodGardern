@@ -174,3 +174,25 @@ test("missing or malformed timezone and completion payload rejected", async () =
     .send({ completed: "true" })
     .expect(400);
 });
+
+test("retrying a prior-day task cannot award growth on the current day", async () => {
+  const yesterday = localDay("UTC", new Date(Date.now() - 86400000));
+  const previous = await ensureToday(a.id, yesterday);
+  const staleTaskId = previous.tasks[0].id;
+  const current = await request(app)
+    .get("/api/rituals/today?timeZone=UTC")
+    .set(auth(tokenA))
+    .expect(200);
+  await request(app)
+    .put(`/api/rituals/today/tasks/${staleTaskId}?timeZone=UTC`)
+    .set(auth(tokenA))
+    .send({ completed: true })
+    .expect(404);
+  const afterRetry = await Ritual.findById(current.body.data.ritual._id);
+  assert.equal(afterRetry.growthAwarded, current.body.data.ritual.growthAwarded);
+  assert.deepEqual(
+    afterRetry.tasks.map((task) => task.completed),
+    current.body.data.ritual.tasks.map((task) => task.completed),
+  );
+  assert.equal((await Ritual.findById(previous._id)).growthAwarded, previous.growthAwarded);
+});

@@ -1,0 +1,38 @@
+[tool] Reading listing services, listing tests
+[tool] status: Completed
+[tool] Reading insightService.js:1, ritualService.js:1, insights.test.js:1, rituals.test.js:1
+[tool] status: Completed
+Here is the review:
+
+---
+
+**insightService**
+
+**`shiftDay` — DST-safe, correct.** Uses `T12:00:00Z` (noon UTC) as the pivot, so UTC offset shifts during DST transitions never spill to the wrong date. `shiftDay("2026-03-09", -1)` → `"2026-03-08"` (tested). No issue.
+
+**`localDay` — DST-safe, correct.** Uses `Intl.DateTimeFormat` directly against the IANA zone, not UTC arithmetic. The DST boundary test (`America/New_York`, `2026-11-01T06:30:00Z` → `"2026-11-01"`) confirms fall-back is handled correctly. No issue.
+
+**Inclusive period boundaries — one real bug.**
+
+`start = shiftDay(today, 1 - Number(period))` for `period=7` with `today="2026-10-08"` gives `shiftDay("2026-10-08", -6)` = `"2026-10-02"`. The period window is then `[2026-10-02, 2026-10-08]` — 7 days inclusive. Correct.
+
+However, the `timeline` facet applies an extra filter `{ $match: { day: { $gte: timelineStart } } }` *inside* the already-`scoped` pipeline (which already filtered `day >= start`). For `period="30"`, `timelineStart = shiftDay(today, -29)` = `"2026-09-09"` and `start = shiftDay(today, -29)` = same value. Redundant but harmless for 30 days. For `period="7"` or `period="all"`, `timelineStart` is always the last-30-days anchor regardless of the selected period, so:
+
+- `period="7"`: `start = "2026-10-02"`, `timelineStart = "2026-09-09"`. The outer scope filters `>= 2026-10-02` first, then timeline adds `>= 2026-09-09` — the tighter filter wins, correct.
+- `period="all"`: `start = null` (no lower bound), `timelineStart = "2026-09-09"`. The README says "timeline limited to latest 30 calendar days" — this is intentional design, not a bug.
+
+**No period-boundary error found.**
+
+**Yesterday-active streak — correct.** `currentStreak` starts from `today` if that day is present, otherwise falls back to `today - 1`. A gap anywhere earlier resets to 0. The test confirms: `["2026-10-06"]` with `today="2026-10-08"` correctly returns 0 (gap on `2026-10-07`). No issue.
+
+**Ties — correct.** `mostCommonMoods` returns all moods tied at the maximum; `mostCommonMood` is null on ties; observations say "tied". Tested with `["happy","calm"]` at count 1 each. No issue.
+
+**Missing/invalid energy — correct.** The `validEnergy` expression requires `$isNumber`, range `[1,5]`. This excludes `null`, string `"5"`, and out-of-range `99`. Average is null when no valid samples exist. Tested explicitly. No issue.
+
+**`garden.totalPlanted` vs `summary.totalCheckIns` — subtle but correct.** `total` counts all owner entries (no date filter), while `summary` aggregates within the period. The periods test confirms: 5 entries total, `all` period counts only 5 within `day <= today` — the entry with `createdAt: 2026-10-09T00:00:00Z` (future relative to `fixed = 2026-10-08T18:00:00Z`) is excluded from `summary` (4) but also from `total` because `createdAt: { $lte: now }` gates the whole pipeline. `garden.totalPlanted` correctly reports 5 in the test — wait, the test asserts `all.garden.totalPlanted === 5` with 6 inserts, one being `2026-10-09T00:00:00Z` (after `fixed`). That entry is excluded by `createdAt: { $lte: now }`. 5 of 6 pass that gate, so `total = 5`. Correct.
+
+**ritualService**
+
+**`dailyTasks` index arithmetic — potential non-uniform distribution.** The formula `(offset + day + i*2) % RITUAL_DEFINITIONS.length` uses step 2, meaning it only ever picks from even or odd indices depending on parity of `offset + day`. If `RITUAL_DEFINITIONS.length` is even, half the rituals are never shown to a given user on any given day. Not tested for. Not a date/period bug, but worth noting as a coverage gap.
+
+**No errors found in date calculations, inclusive periods, DST handling, streak logic, tie reporting, or energy exclusions.** The one concern is `dailyTasks` modular arithmetic potentially skipping half the ritual pool, which the existing tests do not cover.

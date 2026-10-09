@@ -1,0 +1,29 @@
+[tool] Reading listing .
+[tool] status: Completed
+[tool] Reading moodController.js:1, ritualController.js:1, ritualService.js:1, MoodEntry.js:1, Ritual.js:1
+[tool] status: Completed
+[tool] Reading moods.test.js:1, rituals.test.js:1
+[tool] status: Completed
+**MoodEntry idempotency** — the implementation is sound. The partial-unique index on `(userId, clientRequestId)` (filtered to string values only) combined with the 11000 catch-and-replay path correctly handles the race between two concurrent requests that both pass the pre-insert `findOne` check. The replay logic verifies all four mutable fields before accepting a repeat. Existing tests cover: sequential replays, 5-way concurrent submission, cross-user key scoping, content mismatch → 409, and invalid key formats. No gaps found here.
+
+**Ritual atomic completion** — the update query predicates on `{ tasks: { $elemMatch: { id: taskId, completed: false } } }`, so a second concurrent request finds no matching document and gets `null` back, triggering the fallback `findOne`. `growthAwarded` is incremented via `$inc` inside the same operation, so the double-reward path is impossible. Tests confirm: 8 concurrent completions, growth stays at 3 (one award), `completedAt` timestamp is stable after retry, `completed: false` body is rejected 400. No gap found here either.
+
+**Ownership** — every data query threads `userId: req.user.id` derived from the verified JWT. The ritual `ensureToday` and completion filter both include `userId`. Tests explicitly confirm cross-account task IDs return 404 and forged `userId` query params are silently ignored. No issue found.
+
+**One meaningful missing test:**
+
+The `completeTask` handler calls `today(req)` to fetch or create today's ritual *before* running the atomic update. If the user belongs to a deleted account — `User.exists` in `today()` returns false → 401 — but that path is already indirect. The actual gap is: **a lost-response retry where the client sends a completion but the response never arrives, then re-sends it later on a *different calendar day* (timezone rollover).** In that case `today(req)` resolves a *new* ritual document for the new date, the original task ID (deterministically hashed to the previous date) won't exist in the new day's tasks, and the server correctly returns 404 — but no test confirms that behavior. A retry of a prior-day task ID on a new day should return 404, not silently succeed or corrupt the new day's `growthAwarded`. This scenario is the one realistic lost-response/concurrency edge not covered:
+
+```js
+test("prior-day task ID is rejected on the next calendar day", async () => {
+  const yesterday = localDay("UTC", new Date(Date.now() - 86400000));
+  const yesterdayRitual = await ensureToday(a.id, yesterday);
+  const staleTaskId = yesterdayRitual.tasks[0].id;
+  // Completing today's ritual with yesterday's task ID must 404
+  await request(app)
+    .put(`/api/rituals/today/tasks/${staleTaskId}?timeZone=UTC`)
+    .set(auth(tokenA))
+    .send({ completed: true })
+    .expect(404);
+});
+```

@@ -1,0 +1,101 @@
+[tool] Reading listing kiro-assessment
+[tool] status: Completed
+[tool] Reading authMiddleware.js:1, authController.js:1, User.js:1, auth.js:1
+[tool] status: Completed
+[tool] Reading moodController.js:1, ritualController.js:1, insightController.js:1
+[tool] status: Completed
+[tool] Reading MoodEntry.js:1, Ritual.js:1, moodRoutes.js:1, ritualRoutes.js:1
+[tool] status: Completed
+[tool] Reading app.js:1, environment.js:1
+[tool] status: Completed
+Here is the security review.
+
+---
+
+## MoodGarden Auth & Ownership Review
+
+### BUG 1 — JWT token carries no user-identifying claims (functional bug)
+
+**File:** `server/src/utils/auth.js`, `issueToken`
+
+```js
+export function issueToken(user) {
+  return jwt.sign({}, process.env.JWT_SECRET, {
+    subject: user.id, expiresIn: '7d', ...
+  });
+}
+```
+
+`jwt.sign` is called with an **empty payload object `{}`**. The `subject` is passed as a signing option, which places it in the standard `sub` claim of the JWT header/payload correctly per the jsonwebtoken API — so this actually works at runtime. However, if `user.id` is `undefined` (e.g., a newly created Mongoose document before `.save()` resolves `_id` to a string), `sub` becomes `"undefined"`, which is a valid string that passes the `mongoose.isObjectIdOrHexString` check in `requireAuth`. In practice, `User.create()` always returns a document with a valid `_id`, so this is a low-probability path, but it is worth a defensive assertion.
+
+**Verdict:** low-severity latent bug — add `if (!user.id) throw new Error('Missing user id')` before signing.
+
+---
+
+### BUG 2 — `passwordHash` field not excluded from `me` response by default (confirmed bug)
+
+**File:** `server/src/models/User.js`
+
+```js
+passwordHash: { type: String, required: true, select: false },
+```
+
+**File:** `server/src/controllers/authController.js`, `me`
+
+```js
+const user = await User.findById(request.user.id);   // no .select('+passwordHash')
+```
+
+`select: false` on the schema means `findById` without explicit field selection will **not** return `passwordHash` — this is correctly excluded. The `login` handler does explicitly use `.select('+passwordHash')` to load it for comparison, which is correct.
+
+`publicUser()` in `utils/auth.js` also only projects `id`, `name`, `email`, `createdAt`, `updatedAt` — so even if the hash were accidentally loaded, it would be stripped before the response.
+
+**Verdict:** no bug — `passwordHash` exclusion is correctly layered at both the schema and the serialization level.
+
+---
+
+### BUG 3 — `clientRequestId` idempotency check has a TOCTOU window with no-key entries (confirmed bug)
+
+**File:** `server/src/controllers/moodController.js`, `createMood`
+
+```js
+const query = { userId: request.user.id, clientRequestId };
+if (clientRequestId) {
+  const existing = await MoodEntry.findOne(query);
+  if (existing) return replay(existing);
+}
+// ... MoodEntry.create(...)
+```
+
+When `clientRequestId` is `undefined`, the code skips the pre-check and goes straight to `create`. The `query` object used in the race-condition catch handler is `{ userId, clientRequestId: undefined }`, which in MongoDB matches **any document where `clientRequestId` is absent or `null`** — not just this specific request. If the concurrent-insert `11000` catch fires for a no-key entry, `findOne(query)` could return a completely **different** user entry (one without a `clientRequestId`), causing `replay()` to be called on the wrong document.
+
+**Verdict:** confirmed bug — the `catch` block should guard with `if (clientRequestId && error.code === 11000)` before calling `findOne`. Looking again at the code — it does have that guard (`if (clientRequestId && error.code === 11000)`). The no-key path therefore only `throw`s the error, which is correct. **No bug here**, but worth noting the query variable still holds `clientRequestId: undefined`, which is benign because the outer `if (clientRequestId)` prevents it from being used.
+
+---
+
+### BUG 4 — Ownership check in `completeTask` is sound but `taskId` is unvalidated (confirmed bug)
+
+**File:** `server/src/controllers/ritualController.js`, `completeTask`
+
+```js
+const taskId = req.params.taskId;
+if (!ritual.tasks.some((task) => task.id === taskId))
+  throw httpError(404, 'That little ritual could not be found.');
+```
+
+`taskId` is taken directly from the URL parameter with no length or character validation before being used in a string comparison and then passed to the `$elemMatch` query. While the string comparison prevents injection into MongoDB, an arbitrarily long `taskId` (e.g., 100 KB) is accepted, parsed into memory, and compared against task IDs. This is a minor DoS amplification path since the body limit is 32 KB but URL parameters are unbounded.
+
+**Verdict:** low-severity bug — add `if (typeof taskId !== 'string' || taskId.length > 128) throw httpError(400, ...)` before the lookup.
+
+---
+
+### Summary
+
+| # | Location | Severity | Classification |
+|---|----------|----------|----------------|
+| 1 | `utils/auth.js` `issueToken` | Low | Latent bug: no guard on `user.id` before signing |
+| 4 | `ritualController.js` `completeTask` | Low | Bug: `taskId` URL param has no length/format validation |
+
+**Not bugs (correctly implemented):** `passwordHash` schema `select: false` + `publicUser` serializer provides correct double-layer exclusion. Ownership on all mood CRUD uses `entryQuery` which always scopes by `{ _id, userId: request.user.id }`. Ritual completion also re-validates `userId` in the atomic `findOneAndUpdate`. JWT verification checks algorithm, issuer, audience, expiry, and ObjectId validity of `sub`.
+
+**Optional hardening (not bugs):** HttpOnly-cookie sessions, token revocation list, shared-gateway rate limiting (the README already notes the process-local limiter's scope).

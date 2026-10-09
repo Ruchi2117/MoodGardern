@@ -186,7 +186,7 @@ npm run build
 npm audit --omit=dev
 ```
 
-**47 API tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, missing energy, ties, streaks, timezones, CORS, headers, safe errors, environment validation, auth limiting, production SPA routing and asset caching. GitHub Actions runs checks, tests and the production build on pushes and pull requests.
+**48 API tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, missing energy, ties, streaks, timezones, CORS, headers, safe errors, environment validation, auth limiting, production SPA routing and asset caching. GitHub Actions runs checks, tests and the production build on pushes and pull requests.
 
 The test runner uses isolated MongoDB instances and never modifies your application database. First use may download MongoDB. Final browser review covered all six page routes at 320, 375, 390, 430, 768, 1024, 1280, and 1440 pixels; keyboard dialogs/focus/Escape; long notes; empty/single/capped gardens; outage retry states; account isolation; and a simulated expired-session response. See [final review](docs/final-review.md) and [responsive measurements](docs/final-responsive-audit.json).
 
@@ -208,7 +208,7 @@ The auth limiter is process-local: 20 login/registration attempts per IP per 15 
 
 ## AI Development Experience
 
-**Actual tool used: Codex. Kiro/Code0 usage has not been verified.** The hiring assessment specifically requires Kiro or Code0; this requirement remains outstanding and must not be claimed as satisfied by Codex.
+**Actual tools used: Codex for implementation and verification, plus Kiro CLI 2.27.1 for four final source reviews.** [Kiro evidence](docs/kiro-review.md) includes actual responses, accepted/rejected findings and validation. Kiro reviewed authentication/ownership, retry/concurrency behavior, date/Insight calculations, and deployment configuration. Its suggested prior-day ritual retry test was implemented and passes.
 
 Five real Codex-assisted tasks performed on this project:
 
@@ -218,7 +218,7 @@ Five real Codex-assisted tasks performed on this project:
 4. Added API integration tests and checked ownership, timezones, missing energy, ties, and streak edge cases.
 5. Reviewed accessibility, responsive layouts, async failure states, production configuration, and documentation.
 
-Generated code was inspected, modified, built, and tested. Browser testing identified real focus, contrast, overflow, and recovery issues which were corrected. Add 3–5 specific Kiro/Code0 tasks only after they have actually been performed; no such evidence is fabricated here.
+Generated code was inspected, modified, built, and tested. Browser testing identified real focus, contrast, overflow, and recovery issues which were corrected. Kiro findings were checked against source rather than automatically accepted; the evidence retains its incorrect and self-corrected claims.
 
 ## Design Philosophy
 
@@ -241,14 +241,14 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 
 ## Submission Checklist
 
-- [x] Core MERN functionality and all 47 API tests
+- [x] Core MERN functionality and all 48 API tests
 - [x] Production build and code checks
 - [x] Accessibility/contrast and responsive review
 - [x] Local secrets, database files, dependencies, and generated builds excluded from Git
-- [ ] Actual Kiro or Code0 evidence required by the assessment
+- [x] Actual Kiro review evidence required by the assessment
 - [x] Five real showcase screenshots/GIFs and an architecture walkthrough
 - [x] Configure the candidate’s GitHub remote
 - [x] Publish the reviewed repository and verify remote CI
 - [ ] Provision and smoke-test a free public deployment
 
-Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern). A live deployment and genuine Kiro review are pending account sign-in. The local project can be reviewed and run with the commands above.
+Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern). A live deployment is pending Render/Atlas account access. The local project can be reviewed and run with the commands above.

@@ -1,0 +1,73 @@
+[tool] Reading listing MoodBoard, Dockerfile:1, render.yaml:1
+[tool] status: Completed
+[tool] Reading app.js:1, static.test.js:1, server.js:1, .dockerignore:1
+[tool] status: Completed
+Here is the review.
+
+---
+
+## Dockerfile
+
+**Source-proven, no defects.**
+
+- Two-stage build (build → runtime) is correct. `npm ci` installs all workspaces; `npm prune --omit=dev` strips dev deps; only compiled output and production `node_modules` land in the runtime image.
+- `--chown=node:node` on every `COPY` and `USER node` before `CMD` — least-privilege is properly applied.
+- `client/dist` is in `.dockerignore`, so the build stage must produce it, which it does via `RUN npm run build`. No pre-built artifact is silently baked in.
+- `NODE_ENV=production SERVE_CLIENT=true HOST=0.0.0.0` baked into the image are sensible defaults; secrets are not hardcoded.
+
+**One minor concern:** The Dockerfile copies `server/.env` if it exists on the build host, because `.dockerignore` only excludes `**/.env.*` (dotfiles with extensions) and `**/.env` files inside sub-paths — but the pattern `**/.env` does match `server/.env`. Verified: `.dockerignore` contains `**/.env` which glob-matches any `.env` at any depth, so `server/.env` is excluded. ✓
+
+---
+
+## render.yaml
+
+**Source-proven, no defects.**
+
+- `JWT_SECRET: generateValue: true` — Render will auto-generate a random secret per service, correct.
+- `MONGODB_URI: sync: false` and `CLIENT_ORIGIN: sync: false` — these must be supplied manually in the Render dashboard. This is intentional and documented.
+- No secrets appear inline. ✓
+- `plan: free` + `runtime: docker` matches the "$0 budget" claim in the README.
+
+**Cloud-provisioning gap (not a source defect):** `MONGODB_URI` and `CLIENT_ORIGIN` have no value yet — they require the operator to enter them in Render's environment panel before the service can start. The README accurately notes "Live provisioning is pending account access; no public URL is claimed." This is an outstanding deployment task, not a code bug.
+
+---
+
+## SPA vs API fallback (app.js)
+
+**Source-proven, correct.**
+
+The SPA catch-all in `app.js` guards against the three collision cases:
+
+1. Paths starting with `/api/` are explicitly skipped and fall through to the 404 handler.
+2. `/assets/` paths are skipped (static middleware already serves them; the SPA catch-all also skips them).
+3. Non-HTML `Accept` headers are skipped — curl/XHR won't accidentally receive `index.html`.
+
+`static.test.js` tests confirm: protected routes return the shell, hashed assets get `immutable` caching, and unknown API paths return JSON 404 rather than an HTML shell. The tests pass this concern.
+
+---
+
+## Caching
+
+**Source-proven, correct.**
+
+- API responses: `Cache-Control: no-store` (global middleware).
+- Hashed JS/CSS assets (`/assets/...`): `public, max-age=31536000, immutable`.
+- SPA shell (`index.html`) and non-hashed files: `no-cache`.
+
+The three-tier strategy is appropriate and verified by `static.test.js`.
+
+---
+
+## Missing runtime files
+
+**Source-proven.** `server.js` calls `access(client/dist/index.html)` before listening when `SERVE_CLIENT=true`, so a missing build fails fast with a clear error rather than a runtime 404. The Dockerfile produces `client/dist` in the build stage, so the check will pass inside the container. ✓
+
+---
+
+## Free-hosting claims
+
+**Cloud-provisioning gap, not a code defect.** The README explicitly states "Live provisioning is pending account access; no public URL is claimed yet." `render.yaml` and the Dockerfile are correctly configured for Render Free + Atlas M0. The submission checklist openly marks deployment as incomplete. Nothing is falsely claimed as live.
+
+---
+
+**Summary:** The source files are clean. The only outstanding items are operational: manually providing `MONGODB_URI` and `CLIENT_ORIGIN` in Render's dashboard, and completing the smoke-test after provisioning — both accurately self-reported as pending in the README.

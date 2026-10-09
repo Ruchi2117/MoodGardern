@@ -34,4 +34,4 @@ It matches the requested Bearer-token flow and gives simple refresh persistence.
 Add explicit history pagination and garden summary queries, a shared edge rate limiter, and more deliberate timezone/account-session policies. I would not add microservices just because the project grew; the current boundaries are clear and can be measured first.
 
 ## How did you use AI tools?
-Codex assisted the implementation and verification documented in README. Kiro/Code0 must be reported separately only after actual runs and review evidence exist. Explain one concrete finding, the change accepted or rejected, and the test that verified it. Never rename one tool as another.
+Codex assisted implementation and verification. Kiro CLI 2.27.1 performed four final source reviews. I accepted its suggestion to test a prior-day ritual retry: the API must return 404 without awarding growth to either day. That integration test passes. I rejected unsupported security claims after reading the code. [Actual transcripts and decisions](kiro-review.md) preserve both useful and incorrect findings.
