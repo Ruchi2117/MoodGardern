@@ -1,0 +1,172 @@
+/* Final accessibility refinements retain the established cream/sage identity. */
+:root {
+  --text-muted: #5f6d55;
+  --focus-ring: #526941;
+}
+.page-main {
+  display: block;
+  padding: 0;
+  min-width: 0;
+}
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: -100px;
+  z-index: 20;
+  padding: 12px 18px;
+  border-radius: 8px;
+  background: #425a3d;
+  color: #fff;
+}
+.skip-link:focus {
+  top: 16px;
+}
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+}
+.page-main:focus,
+h1[tabindex]:focus,
+h2[tabindex]:focus {
+  outline: none;
+}
+.journal-search:focus-within {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+.auth-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+.primary-button:disabled,
+.plant-feeling:disabled {
+  opacity: 1;
+  background: #dce3d2;
+  color: var(--text-muted);
+}
+.check-in-fields:disabled {
+  opacity: 1;
+}
+.product-header nav a {
+  min-height: 32px;
+}
+.feeling-option {
+  border-radius: 8px;
+  min-height: 64px;
+}
+:where(
+  .auth-layout,
+  .journal-heading,
+  .insights-heading,
+  .garden-welcome,
+  .garden-user,
+  .entry-dialog,
+  .daily-rituals
+) {
+  overflow-wrap: anywhere;
+}
+.garden-user {
+  min-width: 0;
+}
+.garden-user > span {
+  max-width: 190px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.garden-story {
+  min-height: 160px;
+}
+.mood-check-in fieldset {
+  min-width: 0;
+}
+@media (max-width: 370px) {
+  .shell {
+    padding-inline: 18px;
+  }
+  .foundation-label {
+    gap: 8px;
+    font-size: 12px;
+    padding: 15px 12px;
+  }
+  .foundation-label svg:last-child {
+    margin-left: 0;
+  }
+  .intro h1 {
+    font-size: 56px;
+  }
+  .journal-heading h1 {
+    font-size: 34px;
+    flex-wrap: wrap;
+  }
+  .feeling-options {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 8px;
+  }
+  .feeling-option {
+    width: calc(25% - 8px);
+    font-size: 10px;
+  }
+  .floating-note {
+    max-width: calc(100% - 20px);
+    white-space: normal;
+    justify-content: center;
+    text-align: center;
+  }
+  .entry-dialog {
+    padding-inline: 18px;
+  }
+  .insight-summary dd {
+    font-size: 28px;
+  }
+  .insight-common dd {
+    font-size: 19px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.insight-switch button {
+  color: var(--text-muted);
+}
+.insight-switch button[aria-pressed="true"] {
+  color: #fffdf5;
+}
+@media (max-width: 370px) {
+  .personal-garden {
+    margin-inline: -18px;
+  }
+  .garden-scene-heading,
+  .garden-story {
+    padding-inline: 18px;
+  }
+}
+
+.insight-summary > div {
+  display: flex;
+  flex-direction: column;
+}
+.insight-summary dt {
+  order: 1;
+}
+.insight-summary dd {
+  order: 0;
+}

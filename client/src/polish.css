@@ -1,0 +1,654 @@
+/* The sanctuary layer keeps the landing's original palette and typography. */
+.product-header nav {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+.product-header nav a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #5f6d55;
+  transition: color 0.2s;
+}
+.product-header nav a:hover {
+  color: #425a3d;
+}
+.product-header .nav-garden {
+  color: #425a3d;
+}
+.nav-soon {
+  font-size: 8px;
+  color: #5f6d55;
+}
+.garden-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.garden-user > span {
+  font-family: Georgia, serif;
+  font-size: 13px;
+  color: #5f6d55;
+}
+.garden-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 18px;
+  gap: 20px;
+}
+.garden-welcome h1 {
+  font-size: 36px;
+  letter-spacing: -1.4px;
+  margin: 14px 0;
+  overflow-wrap: anywhere;
+}
+.welcome-flower {
+  display: inline-block;
+  margin-left: 12px;
+  font-size: 24px;
+}
+.garden-welcome > p {
+  font-family: Georgia, serif;
+  font-style: italic;
+  color: #5f6d55;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.feeling-picker {
+  text-align: center;
+  padding: 12px 0 5px;
+}
+.feeling-picker h2 {
+  font-family: Georgia, serif;
+  font-size: 23px;
+  font-weight: 400;
+  letter-spacing: -0.4px;
+  margin: 0 0 19px;
+}
+.feeling-options {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+}
+.feeling-option {
+  border: 0;
+  background: none;
+  color: #5f6d55;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 0 5px;
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+}
+.feeling-orb {
+  display: grid;
+  place-items: center;
+  width: 59px;
+  height: 59px;
+  border-radius: 46% 54% 51% 49%;
+  background: var(--mood-color);
+  box-shadow: inset 0 3px 8px #ffffff60;
+  transition:
+    transform 0.25s,
+    box-shadow 0.25s;
+}
+.feeling-orb > span {
+  font-size: 29px;
+  transition: transform 0.25s;
+}
+.feeling-option:hover .feeling-orb {
+  transform: translateY(-4px) rotate(-4deg);
+  box-shadow: 0 7px 20px var(--mood-color);
+}
+.feeling-option:hover .feeling-orb > span {
+  transform: rotate(4deg) scale(1.06);
+}
+.has-selection .feeling-option:not([aria-pressed="true"]) {
+  opacity: 1;
+}
+.has-selection .feeling-option:not([aria-pressed="true"]) .feeling-orb {
+  opacity: 0.75;
+}
+.feeling-option[aria-pressed="true"] .feeling-orb {
+  transform: translateY(-3px) scale(1.09);
+  outline: 1px solid #7e9069;
+  outline-offset: 4px;
+}
+.feeling-caption {
+  color: #5f6d55;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 13px;
+  margin: 18px 0 12px;
+  min-height: 20px;
+}
+.personal-garden {
+  position: relative;
+  margin: 12px -20px 0;
+  padding: 25px 20px 26px;
+  background: radial-gradient(ellipse at 50% 40%, #edf0df 0%, #f8f7ef 70%);
+}
+.garden-scene-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+}
+.garden-season {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-style: italic;
+  color: #5f6d55;
+}
+.sanctuary-scene {
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
+.sanctuary-scene svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.personal-garden .sanctuary-scene {
+  margin-top: -14px;
+}
+.scene-sprig {
+  transform-origin: 0 0;
+  animation: botanical-sway 7s ease-in-out infinite;
+}
+.scene-sun {
+  transform-origin: 690px 88px;
+  animation: sun-breathe 12s ease-in-out infinite;
+}
+.scene-cloud {
+  animation: cloud-drift 24s ease-in-out infinite;
+}
+.scene-butterfly {
+  animation: butterfly-drift 12s ease-in-out infinite;
+}
+.butterfly-wings {
+  animation: wing-breathe 2.7s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.scene-particles {
+  animation: pollen-drift 10s ease-in-out infinite;
+}
+.garden-story {
+  text-align: center;
+  margin-top: -26px;
+  position: relative;
+}
+.garden-story h2 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 25px;
+  letter-spacing: -0.5px;
+  margin: 10px 0;
+}
+.garden-story p {
+  color: #5f6d55;
+  font-size: 13px;
+  margin: 7px 0 9px;
+}
+.preview-copy {
+  font-size: 10px;
+  color: #5f6d55;
+  line-height: 1.6;
+}
+.garden-understory {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr 0.8fr;
+  gap: 42px;
+  padding: 28px 0 35px;
+  border-top: 1px solid #e2e4d7;
+  margin-top: 15px;
+}
+.garden-understory > div {
+  position: relative;
+  scroll-margin-top: 25px;
+}
+.garden-understory h3 {
+  font-family: Georgia, serif;
+  font-weight: 400;
+  font-size: 19px;
+  margin: 10px 0;
+}
+.garden-understory p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #5f6d55;
+}
+.ritual-decoration {
+  position: absolute;
+  right: 12px;
+  top: 26px;
+  font-size: 35px;
+  color: #5f6d55;
+}
+.thoughts-preview {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.notebook-art {
+  flex-shrink: 0;
+  width: 49px;
+  height: 65px;
+  background: #e4d9d9;
+  border-radius: 3px 9px 9px 3px;
+  border-left: 6px solid #b99e9f;
+  transform: rotate(-8deg);
+  padding: 15px 7px;
+}
+.notebook-art span {
+  display: block;
+  height: 1px;
+  background: #bca6a7;
+  margin: 7px 0;
+}
+.auth-layout {
+  gap: 90px;
+  padding: 42px 0 55px;
+}
+.auth-layout .intro {
+  position: relative;
+  padding-top: 20px;
+}
+.auth-layout h1 {
+  font-size: 54px;
+  line-height: 1.13;
+  margin: 24px 0 16px;
+  letter-spacing: -2px;
+}
+.auth-layout .intro > p {
+  max-width: 380px;
+  font-size: 13px;
+}
+.auth-layout .sanctuary-scene {
+  width: 120%;
+  margin: 0 -10%;
+}
+.auth-reminder {
+  margin-top: 0;
+  font-size: 12px;
+  justify-content: center;
+}
+.auth-reminder svg {
+  width: 27px;
+}
+.auth-card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 35px 15px 20px;
+  max-width: 430px;
+  width: 100%;
+  align-self: center;
+}
+.auth-card input {
+  background: #fffdf7;
+  padding: 14px;
+  border-color: #d9decd;
+}
+.auth-card h2 {
+  font-size: 28px;
+}
+.auth-card .primary-button {
+  margin-top: 6px;
+}
+.primary-button,
+.foundation-label {
+  transition:
+    transform 0.25s,
+    background 0.25s;
+}
+.primary-button:hover:not(:disabled),
+.foundation-label:hover {
+  transform: translateY(-2px);
+  background: #354c31;
+}
+.foundation-label svg {
+  transition: transform 0.3s;
+}
+.foundation-label:hover svg:first-child {
+  transform: rotate(-12deg);
+}
+.foundation-label:hover svg:last-child {
+  transform: translate(3px, -3px);
+}
+.landing-butterfly {
+  position: absolute;
+  left: 65%;
+  top: 24%;
+  color: #5f6d55;
+  font-family: Georgia, serif;
+  font-size: 28px;
+  animation: landing-fly 14s ease-in-out infinite;
+}
+.landing-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.landing-particles i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c6b27b;
+  left: 20%;
+  top: 40%;
+  animation: pollen-drift 9s ease-in-out infinite;
+}
+.landing-particles i:nth-child(2) {
+  left: 70%;
+  top: 60%;
+  animation-delay: -3s;
+}
+.landing-particles i:nth-child(3) {
+  left: 40%;
+  top: 20%;
+  animation-delay: -6s;
+}
+@keyframes botanical-sway {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+}
+@keyframes sun-breathe {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+@keyframes cloud-drift {
+  0%,
+  100% {
+    transform: translateX(-6px);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+}
+@keyframes butterfly-drift {
+  0%,
+  100% {
+    transform: translate(584px, 165px) rotate(-5deg);
+  }
+  50% {
+    transform: translate(620px, 143px) rotate(6deg);
+  }
+}
+@keyframes wing-breathe {
+  0%,
+  100% {
+    transform: scaleX(0.75);
+  }
+  50% {
+    transform: scaleX(1);
+  }
+}
+@keyframes pollen-drift {
+  0%,
+  100% {
+    transform: translateY(5px);
+    opacity: 0.25;
+  }
+  50% {
+    transform: translateY(-9px);
+    opacity: 0.7;
+  }
+}
+@keyframes landing-fly {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-7deg);
+  }
+  50% {
+    transform: translate(17px, -10px) rotate(7deg);
+  }
+}
+@media (max-width: 1000px) {
+  .product-header nav {
+    gap: 14px;
+  }
+  .garden-user > span {
+    display: none;
+  }
+  .garden-welcome h1 {
+    font-size: 32px;
+  }
+  .garden-welcome > p {
+    font-size: 12px;
+  }
+  .auth-layout {
+    gap: 40px;
+  }
+  .auth-layout h1 {
+    font-size: 46px;
+  }
+  .garden-understory {
+    gap: 25px;
+  }
+  .thoughts-preview {
+    gap: 12px;
+  }
+}
+@media (max-width: 650px) {
+  .product-header {
+    height: auto;
+    min-height: 85px;
+    flex-wrap: wrap;
+    padding: 22px 0 14px;
+    gap: 18px;
+  }
+  .product-header nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 28px;
+    padding-top: 8px;
+  }
+  .product-header nav a {
+    font-size: 11px;
+  }
+  .garden-user .text-button {
+    padding-right: 0;
+  }
+  .garden-welcome {
+    padding: 28px 0 12px;
+  }
+  .garden-welcome h1 {
+    font-size: 31px;
+    line-height: 1.25;
+    letter-spacing: -1px;
+  }
+  .garden-welcome > p {
+    display: none;
+  }
+  .garden-welcome .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.6px;
+  }
+  .welcome-flower {
+    font-size: 20px;
+    margin-left: 6px;
+  }
+  .feeling-picker {
+    padding-top: 6px;
+  }
+  .feeling-picker h2 {
+    font-size: 21px;
+    margin-bottom: 18px;
+  }
+  .feeling-options {
+    gap: 0;
+    justify-content: space-between;
+  }
+  .feeling-option {
+    padding: 0 2px;
+    font-size: 9px;
+    gap: 8px;
+  }
+  .feeling-orb {
+    width: 39px;
+    height: 42px;
+  }
+  .feeling-orb > span {
+    font-size: 23px;
+  }
+  .feeling-caption {
+    font-size: 12px;
+    margin-top: 16px;
+  }
+  .personal-garden {
+    margin: 10px -22px 0;
+    padding: 15px 0 24px;
+    overflow: hidden;
+  }
+  .garden-scene-heading {
+    padding: 0 22px;
+  }
+  .garden-scene-heading .eyebrow {
+    font-size: 8px;
+    letter-spacing: 1.4px;
+  }
+  .garden-season {
+    font-size: 10px;
+  }
+  .personal-garden .sanctuary-scene {
+    width: 140%;
+    max-width: none;
+    margin: 0 -20%;
+  }
+  .garden-story {
+    margin-top: -5px;
+    padding: 0 22px;
+  }
+  .garden-story h2 {
+    font-size: 23px;
+  }
+  .garden-story p {
+    font-size: 12px;
+  }
+  .garden-understory {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px 18px;
+    padding: 24px 0;
+  }
+  .ritual-preview {
+    grid-column: 1/-1;
+    padding: 0 5px 16px;
+    border-bottom: 1px solid #e2e4d7;
+  }
+  .garden-understory h3 {
+    font-size: 17px;
+  }
+  .garden-understory p {
+    font-size: 11px;
+  }
+  .thoughts-preview {
+    display: block;
+  }
+  .notebook-art {
+    width: 32px;
+    height: 40px;
+    padding: 4px 4px;
+    margin-bottom: 15px;
+  }
+  .garden-understory .small-label {
+    font-size: 7px;
+  }
+  .auth-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0;
+    gap: 10px;
+  }
+  .auth-layout .intro {
+    padding: 0;
+    width: 100%;
+  }
+  .auth-layout h1 {
+    font-size: 38px;
+    margin: 14px 0;
+  }
+  .auth-layout h1 br {
+    display: none;
+  }
+  .auth-layout .intro > p {
+    font-size: 12px;
+  }
+  .auth-layout .sanctuary-scene {
+    width: 100%;
+    margin: -12px 0 -25px;
+  }
+  .auth-reminder {
+    display: none;
+  }
+  .auth-card {
+    padding: 10px 0 25px;
+    max-width: none;
+  }
+  .auth-card h2 {
+    font-size: 25px;
+  }
+  .auth-sprout {
+    display: none;
+  }
+  .auth-card form {
+    margin-top: 18px;
+    gap: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .feeling-orb {
+    width: 34px;
+    height: 38px;
+  }
+  .feeling-orb > span {
+    font-size: 21px;
+  }
+  .product-header nav {
+    gap: 18px;
+  }
+  .garden-season {
+    font-size: 8px;
+  }
+}
+.sanctuary-shell .small-label {
+  color: #5f6d55;
+}
+.preview-copy,
+.nav-soon {
+  color: #5f6d55;
+}

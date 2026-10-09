@@ -1,0 +1,185 @@
+.daily-rituals {
+  margin: 28px auto 36px;
+  padding: 28px 32px;
+  background: #f4f3e8;
+  border: 1px solid #dce1ce;
+  border-radius: 24px;
+  max-width: 100%;
+  color: #46533d;
+}
+.ritual-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.ritual-heading h2 {
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-weight: 400;
+  margin: 8px 0;
+}
+.ritual-heading p,
+.ritual-message {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #5f6d55;
+}
+.ritual-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.ritual-task {
+  display: flex;
+  align-items: flex-start;
+  text-align: left;
+  gap: 12px;
+  background: #fcfbf3;
+  border: 1px solid #e2e4d6;
+  border-radius: 17px;
+  padding: 20px 16px;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    background 0.4s,
+    border-color 0.4s;
+  min-height: 128px;
+}
+.ritual-task:hover:not(:disabled) {
+  background: #fffdf4;
+  border-color: #8a9d73;
+}
+.ritual-task:focus-visible {
+  outline: 2px solid #66804c;
+  outline-offset: 4px;
+}
+.ritual-task:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.ritual-task.is-done {
+  background: #e8eddd;
+  border-color: #c5d2b3;
+}
+.ritual-icon {
+  font-size: 23px;
+}
+.ritual-text {
+  flex: 1;
+  min-width: 0;
+}
+.ritual-text strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.ritual-text > span {
+  display: block;
+  font-size: 12px;
+  color: #5f6d55;
+  margin-top: 6px;
+  line-height: 1.7;
+}
+.ritual-text small {
+  display: block;
+  margin-top: 9px;
+  font-size: 11px;
+  color: #526b3e;
+}
+.ritual-check {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #aabd91;
+}
+.is-done .ritual-check {
+  background: #73895d;
+  color: white;
+  animation: care-reveal 0.6s ease-out;
+}
+.ritual-message {
+  margin-bottom: 0;
+}
+.ritual-error {
+  font-size: 13px;
+}
+.ritual-error button {
+  border: 0;
+  background: transparent;
+  text-decoration: underline;
+  color: inherit;
+  cursor: pointer;
+}
+.personal-garden {
+  position: relative;
+}
+.care-sparkle {
+  position: absolute;
+  top: 38%;
+  left: 46%;
+  color: #5f6d55;
+  font-size: 38px;
+  pointer-events: none;
+  z-index: 2;
+  animation: care-sparkle 2s ease-out both;
+}
+.garden-understory {
+  grid-template-columns: 1fr 1fr;
+}
+@keyframes care-reveal {
+  from {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes care-sparkle {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-26px);
+  }
+}
+@media (max-width: 760px) {
+  .daily-rituals {
+    padding: 22px 18px;
+  }
+  .ritual-list {
+    grid-template-columns: 1fr;
+  }
+  .ritual-task {
+    min-height: 96px;
+    padding: 18px;
+  }
+  .garden-understory {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ritual-task {
+    transition: none;
+  }
+  .is-done .ritual-check,
+  .care-sparkle {
+    animation: none;
+  }
+  .care-sparkle {
+    display: none;
+  }
+}

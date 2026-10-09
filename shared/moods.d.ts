@@ -1,0 +1,10 @@
+export type Mood = 'happy' | 'loved' | 'calm' | 'okay' | 'sad' | 'stressed' | 'tired';
+export type Activity = 'work' | 'study' | 'family' | 'friends' | 'exercise' | 'sleep' | 'food' | 'travel' | 'self-care' | 'other';
+export type PlantType = 'sunflower' | 'pink-flower' | 'lavender' | 'sprout' | 'mushroom' | 'leafy-plant' | 'sleepy-flower';
+export type MoodPlant = { name: string; emoji: string; label: string; color: string; plantType: PlantType; displayName: string; accent: string; message: string };
+export const MOOD_PLANTS: Record<Mood, MoodPlant>;
+export const MOODS: Mood[];
+export const ACTIVITIES: Activity[];
+export const NOTE_MAX_LENGTH: number;
+export const GROWTH_PER_ENTRY: number;
+export const VISIBLE_PLANT_LIMIT: number;

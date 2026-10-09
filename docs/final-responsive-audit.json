@@ -1,0 +1,420 @@
+{
+  "responsive": [
+    {
+      "available": 305,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "available": 360,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 360,
+      "width": 375
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "available": 415,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 415,
+      "width": 430
+    },
+    {
+      "available": 768,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "available": 1024,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "available": 1280,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 1280,
+      "width": 1280
+    },
+    {
+      "available": 1440,
+      "h1": 1,
+      "main": 1,
+      "route": "/",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "available": 305,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "available": 360,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 360,
+      "width": 375
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "available": 415,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 415,
+      "width": 430
+    },
+    {
+      "available": 753,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 753,
+      "width": 768
+    },
+    {
+      "available": 1009,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 1009,
+      "width": 1024
+    },
+    {
+      "available": 1265,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 1265,
+      "width": 1280
+    },
+    {
+      "available": 1425,
+      "h1": 1,
+      "main": 1,
+      "route": "/dashboard",
+      "scroll": 1425,
+      "width": 1440
+    },
+    {
+      "available": 305,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "available": 360,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 360,
+      "width": 375
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "available": 415,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 415,
+      "width": 430
+    },
+    {
+      "available": 753,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 753,
+      "width": 768
+    },
+    {
+      "available": 1024,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "available": 1280,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 1280,
+      "width": 1280
+    },
+    {
+      "available": 1440,
+      "h1": 1,
+      "main": 1,
+      "route": "/journal",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "available": 305,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "available": 360,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 360,
+      "width": 375
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "available": 415,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 415,
+      "width": 430
+    },
+    {
+      "available": 753,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 753,
+      "width": 768
+    },
+    {
+      "available": 1009,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 1009,
+      "width": 1024
+    },
+    {
+      "available": 1265,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 1265,
+      "width": 1280
+    },
+    {
+      "available": 1425,
+      "h1": 1,
+      "main": 1,
+      "route": "/insights",
+      "scroll": 1425,
+      "width": 1440
+    },
+    {
+      "available": 320,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 320,
+      "width": 320
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 375,
+      "width": 375
+    },
+    {
+      "available": 390,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 390,
+      "width": 390
+    },
+    {
+      "available": 430,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 430,
+      "width": 430
+    },
+    {
+      "available": 768,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "available": 1024,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "available": 1280,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 1280,
+      "width": 1280
+    },
+    {
+      "available": 1440,
+      "h1": 1,
+      "main": 1,
+      "route": "/login",
+      "scroll": 1440,
+      "width": 1440
+    },
+    {
+      "available": 305,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 305,
+      "width": 320
+    },
+    {
+      "available": 360,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 360,
+      "width": 375
+    },
+    {
+      "available": 375,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 375,
+      "width": 390
+    },
+    {
+      "available": 415,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 415,
+      "width": 430
+    },
+    {
+      "available": 768,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 768,
+      "width": 768
+    },
+    {
+      "available": 1024,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 1024,
+      "width": 1024
+    },
+    {
+      "available": 1280,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 1280,
+      "width": 1280
+    },
+    {
+      "available": 1440,
+      "h1": 1,
+      "main": 1,
+      "route": "/register",
+      "scroll": 1440,
+      "width": 1440
+    }
+  ],
+  "contrast": [
+    {
+      "checked": 30,
+      "failures": [],
+      "route": "/"
+    },
+    {
+      "checked": 54,
+      "failures": [],
+      "route": "/dashboard"
+    },
+    {
+      "checked": 30,
+      "failures": [],
+      "route": "/journal"
+    },
+    {
+      "checked": 61,
+      "failures": [],
+      "route": "/insights"
+    },
+    {
+      "checked": 16,
+      "failures": [],
+      "route": "/login"
+    },
+    {
+      "checked": 18,
+      "failures": [],
+      "route": "/register"
+    }
+  ]
+}

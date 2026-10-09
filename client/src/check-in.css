@@ -1,0 +1,294 @@
+.mood-check-in {
+  max-width: 760px;
+  margin: 0 auto 10px;
+  text-align: center;
+}
+.check-in-fields {
+  border: 0;
+  padding: 20px 0 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  text-align: left;
+  animation: check-in-reveal 0.45s ease-out;
+}
+.check-in-fields label,
+.check-in-fields legend {
+  font-family: Georgia, serif;
+  font-size: 17px;
+  color: #425a3d;
+  line-height: 1.5;
+}
+.thought-field textarea {
+  display: block;
+  width: 100%;
+  resize: vertical;
+  min-height: 105px;
+  max-height: 250px;
+  margin-top: 10px;
+  background: #fffdf7;
+  border: 1px solid #d9decd;
+  border-radius: 10px;
+  padding: 13px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #303f32;
+}
+.thought-field textarea:focus {
+  outline: 2px solid #879c70;
+  outline-offset: 2px;
+}
+.note-count,
+.energy-caption {
+  display: block;
+  font-size: 10px;
+  color: #5f6d55;
+  margin-top: 7px;
+}
+.check-in-details {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.check-in-details fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.activity-options,
+.energy-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+.activity-options button {
+  border: 1px solid #d9decd;
+  background: #f3f3e9;
+  color: #5f6d55;
+  border-radius: 20px;
+  padding: 6px 11px;
+  font-size: 10px;
+}
+.activity-options button[aria-pressed="true"] {
+  border-color: #728762;
+  background: #e2e8d5;
+  color: #354c31;
+}
+.energy-options button {
+  width: 35px;
+  height: 35px;
+  border: 1px solid #d9decd;
+  border-radius: 50%;
+  color: #5f6d55;
+  background: #f3f3e9;
+  font-size: 12px;
+}
+.energy-options button[aria-pressed="true"] {
+  background: #425a3d;
+  color: white;
+  border-color: #425a3d;
+}
+.plant-feeling {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0 12px;
+}
+.plant-feeling:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.check-in-error {
+  font-size: 12px;
+  color: #954a4a;
+  line-height: 1.6;
+}
+.garden-status {
+  text-align: center;
+  font-size: 12px;
+  color: #5f6d55;
+  margin: 15px 0;
+  position: relative;
+  z-index: 1;
+}
+.garden-error {
+  color: #954a4a;
+}
+.garden-error button {
+  border: 0;
+  background: none;
+  color: inherit;
+  text-decoration: underline;
+  padding: 6px;
+}
+.recent-feelings ul {
+  list-style: none;
+  padding: 0;
+  margin: 13px 0;
+}
+.recent-feelings li {
+  display: flex;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+.recent-feelings li > span {
+  font-size: 20px;
+}
+.recent-feelings li > div {
+  min-width: 0;
+  flex: 1;
+}
+.recent-feelings strong {
+  font-size: 12px;
+  font-weight: 500;
+}
+.recent-feelings time {
+  float: right;
+  font-size: 9px;
+  color: #5f6d55;
+  margin-top: 3px;
+}
+.recent-feelings li p {
+  margin: 5px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+.recent-feelings > .thoughts-preview {
+  margin-top: 18px;
+}
+.new-garden-plant {
+  animation: plant-grow 1.2s 0.65s cubic-bezier(0.2, 0.6, 0.3, 1) both;
+  transform-origin: 0 0;
+}
+.planting-seed {
+  animation: seed-into-soil 0.75s ease-in both;
+}
+.planting-sparkles {
+  animation: plant-sparkles 1.6s 0.9s ease-out both;
+}
+.planting-success {
+  animation: success-appear 0.4s 1.25s both;
+}
+.feeling-option:disabled {
+  cursor: wait;
+}
+.check-in-fields:disabled {
+  opacity: 0.7;
+}
+@keyframes check-in-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes seed-into-soil {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) rotate(-15deg);
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+@keyframes plant-grow {
+  from {
+    opacity: 0;
+    transform: scale(0.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes plant-sparkles {
+  0% {
+    opacity: 0;
+    transform: translateY(5px) scale(0.7);
+  }
+  35% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px) scale(1.1);
+  }
+}
+@keyframes success-appear {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 650px) {
+  .check-in-fields {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 16px 3px;
+  }
+  .check-in-fields label,
+  .check-in-fields legend {
+    font-size: 16px;
+  }
+  .mood-check-in {
+    margin-bottom: 10px;
+  }
+  .activity-options button {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+  .energy-options button {
+    width: 39px;
+    height: 39px;
+  }
+  .plant-feeling {
+    font-size: 12px;
+  }
+  .recent-feelings time {
+    float: none;
+    display: block;
+  }
+  .recent-feelings li {
+    gap: 6px;
+  }
+  .garden-status {
+    padding: 0 22px;
+  }
+  .garden-season {
+    max-width: 40%;
+    text-align: right;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .new-garden-plant,
+  .planting-success {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  .planting-seed,
+  .planting-sparkles {
+    display: none;
+  }
+}
