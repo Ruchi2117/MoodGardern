@@ -248,7 +248,7 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 - [ ] Actual Kiro or Code0 evidence required by the assessment
 - [x] Five real showcase screenshots/GIFs and an architecture walkthrough
 - [x] Configure the candidate’s GitHub remote
-- [ ] Publish the reviewed repository and verify remote CI
+- [x] Publish the reviewed repository and verify remote CI
 - [ ] Provision and smoke-test a free public deployment
 
 Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern). A live deployment and genuine Kiro review are pending account sign-in. The local project can be reviewed and run with the commands above.
