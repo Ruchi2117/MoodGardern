@@ -1,5 +1,7 @@
 # MoodGarden 🌷
 
+[Open the live app](https://moodgarden-ruchi2117.onrender.com) — hosted on Render Free with MongoDB Atlas Free. The service sleeps when inactive, so the first visit may take about a minute. AI chat remains disconnected; the local companion works without a provider.
+
 ## What is MoodGarden?
 
 A cozy mood-tracking and journaling app where your feelings become a little garden. Record a feeling, leave a thought, and take a small moment for yourself. The garden reflects saved check-ins; daily rituals represent gentle acts of care.
