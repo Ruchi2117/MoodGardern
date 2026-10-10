@@ -1,4 +1,5 @@
 import { MOOD_PLANTS, MOODS, type Mood } from "../../../shared/moods.js";
+import MoodIllustration from "./MoodIllustration";
 export default function MoodPicker({
   value,
   onChange,
@@ -30,7 +31,7 @@ export default function MoodPicker({
               onClick={() => onChange(key)}
             >
               <span className="feeling-orb">
-                <span aria-hidden="true">{mood.emoji}</span>
+                <MoodIllustration mood={key} size={52} />
               </span>
               <span>{mood.name}</span>
             </button>

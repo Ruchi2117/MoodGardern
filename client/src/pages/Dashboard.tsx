@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Flower2 } from "lucide-react";
 import ProductHeader from "../components/ProductHeader";
 import GardenScene from "../components/garden/GardenScene";
+import PocketGarden from "../components/garden/PocketGarden";
 import DailyRituals from "../components/DailyRituals";
 import useDailyRituals from "../hooks/useDailyRituals";
 import MoodPicker from "../components/MoodPicker";
@@ -140,6 +141,7 @@ export default function Dashboard() {
             </span>
           </div>
         </section>
+        <PocketGarden key={user?.id} plantedId={garden.plantedId} care={rituals.care} entries={garden.entries} />
         <DailyRituals rituals={rituals} />
         <section className="garden-understory" aria-label="Around your garden">
           <RecentFeelings

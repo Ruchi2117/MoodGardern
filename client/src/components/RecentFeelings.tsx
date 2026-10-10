@@ -1,3 +1,4 @@
+import MoodIllustration from "./MoodIllustration";
 import { Link } from "react-router-dom";
 import { MOOD_PLANTS } from "../../../shared/moods.js";
 import type { MoodEntry } from "../services/api";
@@ -28,7 +29,7 @@ export default function RecentFeelings({
             .reverse()
             .map((entry) => (
               <li key={entry._id}>
-                <span aria-hidden="true">{MOOD_PLANTS[entry.mood].emoji}</span>
+                <MoodIllustration mood={entry.mood} size={26}/>
                 <Link
                   className="recent-entry-link"
                   to={`/journal?entry=${entry._id}`}

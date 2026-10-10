@@ -1,3 +1,4 @@
+import MoodIllustration from "../MoodIllustration";
 import { Flower2 } from "lucide-react";
 import { MOOD_PLANTS } from "../../../../shared/moods.js";
 import type { MoodEntry } from "../../services/api";
@@ -42,7 +43,7 @@ export default function JournalEntryCard({
       <div className="journal-card-top">
         <span>
           <span className="journal-mood-icon" aria-hidden="true">
-            {mood.emoji}
+            <MoodIllustration mood={entry.mood} size={30}/>
           </span>
           {mood.name}
         </span>

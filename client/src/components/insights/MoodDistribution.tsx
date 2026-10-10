@@ -1,3 +1,4 @@
+import MoodIllustration from "../MoodIllustration";
 import { MOOD_PLANTS } from "../../../../shared/moods.js";
 import type { InsightData } from "../../services/api";
 export default function MoodDistribution({ data }: { data: InsightData }) {
@@ -19,7 +20,7 @@ export default function MoodDistribution({ data }: { data: InsightData }) {
               aria-label={`${config.name}: ${count} ${count === 1 ? "check-in" : "check-ins"}`}
             >
               <span className="bar-label">
-                <span aria-hidden="true">{config.emoji}</span>
+                <MoodIllustration mood={mood} size={26}/>
                 {config.name}
               </span>
               <span className="mood-bar-track" aria-hidden="true">

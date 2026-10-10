@@ -1,3 +1,4 @@
+import MoodIllustration from "../MoodIllustration";
 import { useState, type FormEvent } from "react";
 import {
   MOODS,
@@ -44,7 +45,7 @@ export default function JournalEntryEditor({
                 onClick={() => setMood(value)}
                 title={MOOD_PLANTS[value].name}
               >
-                <span aria-hidden="true">{MOOD_PLANTS[value].emoji}</span>
+                <MoodIllustration mood={value} size={26}/>
                 {MOOD_PLANTS[value].name}
               </button>
             ))}

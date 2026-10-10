@@ -7,12 +7,14 @@ import authRoutes from "./routes/authRoutes.js";
 import insightRoutes from "./routes/insightRoutes.js";
 import ritualRoutes from "./routes/ritualRoutes.js";
 import moodRoutes from "./routes/moodRoutes.js";
+import { companionRoutes } from "./routes/companionRoutes.js";
 
 export function createApp({
   clientOrigin = process.env.CLIENT_ORIGIN || "http://127.0.0.1:5173",
   trustProxy = false,
   serveClient = false,
   clientDirectory = fileURLToPath(new URL("../../client/dist/", import.meta.url)),
+  companion,
 } = {}) {
   const app = express();
   app.disable("x-powered-by");
@@ -34,6 +36,7 @@ export function createApp({
   app.use("/api/moods", moodRoutes);
   app.use("/api/rituals", ritualRoutes);
   app.use("/api/insights", insightRoutes);
+  app.use("/api/companion", companionRoutes(companion));
   app.get("/api/health", (_request, response) => {
     response.json({ data: { status: "ok", service: "MoodGarden API" } });
   });

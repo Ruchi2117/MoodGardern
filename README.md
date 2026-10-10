@@ -13,6 +13,8 @@ A cozy mood-tracking and journaling app where your feelings become a little gard
 - **Gentle insights:** real mood counts, energy averages, local-calendar check-in streaks, timelines, and descriptive observations.
 - **Authentication:** registration, login, JWT-protected pages/APIs, session restoration, and logout.
 - **Responsive interface:** cream/sage botanical styling, keyboard controls, visible focus, and reduced-motion support.
+- **Optional pocket garden:** an interactive 3D sprout, tactile retro handheld, and mood-backed miniature diorama. Tap to wave, make pretend rain or rotate; saved moods and completed rituals trigger a short celebration. The original garden stays intact.
+- **Woodland companion:** original illustrated mood faces, a customizable friend, optional soft sounds, and free local habit chat. Optional AI routing is implemented but remains disconnected until a provider is chosen. [Details and privacy](docs/companion.md).
 
 ## Screenshots
 
@@ -42,7 +44,7 @@ These five assets show the running app with fictional local demo entries. The GI
 | Backend        | Node.js, Express 5                                                           |
 | Database       | MongoDB, Mongoose                                                            |
 | Authentication | JWT via jsonwebtoken, bcryptjs                                               |
-| Animation      | SVG and CSS transforms/opacity; no JavaScript animation loop or 3D runtime   |
+| Animation      | Original SVG/CSS garden plus a lazy-loaded, locally modelled Three.js pocket scene |
 | Tests          | Node test runner, Supertest, isolated real MongoDB via mongodb-memory-server |
 
 ## Architecture
@@ -186,7 +188,7 @@ npm run build
 npm audit --omit=dev
 ```
 
-**48 API tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, missing energy, ties, streaks, timezones, CORS, headers, safe errors, environment validation, auth limiting, production SPA routing and asset caching. GitHub Actions runs checks, tests and the production build on pushes and pull requests.
+**55 API tests plus 5 local-chat tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, timezones, production configuration, static routing, companion input/privacy/rate limits, and local habit follow-ups. GitHub Actions runs checks, tests and the production build on pushes and pull requests. New local changes require publishing before remote CI can verify them.
 
 The test runner uses isolated MongoDB instances and never modifies your application database. First use may download MongoDB. Final browser review covered all six page routes at 320, 375, 390, 430, 768, 1024, 1280, and 1440 pixels; keyboard dialogs/focus/Escape; long notes; empty/single/capped gardens; outage retry states; account isolation; and a simulated expired-session response. See [final review](docs/final-review.md) and [responsive measurements](docs/final-responsive-audit.json).
 
@@ -237,7 +239,7 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 - Timezone follows the active browser; travel can regroup historical mood timestamps. Ritual dates retain their saved local-day identity.
 - Concurrent entry edits use last-write-wins. Multi-query Insights are near-current rather than a transactional snapshot.
 - Browser localStorage exposes Bearer tokens to scripts running on the page. HttpOnly-cookie sessions with CSRF protection and server revocation are possible production hardening; copied JWTs currently remain valid until expiry.
-- Optional future garden customization/themes or a contained 3D scene could build on the existing renderer. They are not needed for the complete assessment product.
+- The optional 3D section adds about 143 kB gzip when it approaches the viewport. It requires WebGL2; unsupported devices get a simpler view. Play actions never create mood entries or ritual rewards. See [3D implementation notes](docs/pocket-garden.md).
 
 ## Submission Checklist
 

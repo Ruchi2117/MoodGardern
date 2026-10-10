@@ -21,8 +21,8 @@ The API can enforce ownership once, use aggregation, and return only the fields 
 ## Why no AI-generated observations?
 Simple counts and recorded-day patterns are deterministic, testable, and easy to verify. The app should help someone notice what they recorded without making unsupported claims about their emotional health.
 
-## Why SVG/CSS instead of Three.js?
-The garden is memorable without a large 3D runtime. A fixed visible plant limit, stable slots, and transform/opacity animation make performance predictable. It also works with reduced motion. Optional 3D could be explored later; it is not necessary to demonstrate the product or MERN skills.
+## Why keep SVG/CSS alongside the new 3D scene?
+The original garden remains the main view, with stable plant positions, a visible plant limit and reduced-motion support. The requested 3D experience is a separate optional pocket scene, loaded near the viewport. Its flowers derive from the same saved entries. Native geometry keeps it local and avoids an external Spline scene/account. Tap interactions use raycasting, with equivalent HTML buttons for keyboard access. Animation stops after short reactions and pauses off-screen; WebGL support and the additional bundle are explicit tradeoffs.
 
 ## Why these tests?
 The risky behavior is at API/database boundaries: ownership, input validation, invalid tokens, retries, concurrency, and local dates. Integration tests with a real isolated MongoDB instance cover those behaviors instead of only mocking the implementation. Browser checks cover the interaction and layout layer.

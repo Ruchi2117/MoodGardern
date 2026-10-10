@@ -57,6 +57,10 @@ async function request<T>(
 }
 export const getHealth = (signal?: AbortSignal) =>
   request<{ status: string; service: string }>("/health", { signal });
+export const companionStatus = (signal?: AbortSignal) =>
+  request<{ available: boolean }>("/companion/status", { signal }, sessionToken());
+export const askCompanion = (messages: {role:"user"|"assistant";content:string}[], signal?: AbortSignal) =>
+  request<{reply:string;source:"ai"}>("/companion/chat", {method:"POST",body:JSON.stringify({messages}),signal}, sessionToken());
 export const getCurrentUser = (token: string, signal?: AbortSignal) =>
   request<{ user: User }>("/auth/me", { signal }, token);
 export const registerUser = (data: {

@@ -1,12 +1,13 @@
-import { Flower2, Sprout, BookOpen, Sparkles } from "lucide-react";
+import { Sprout, BookOpen, Sparkles } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import MoodIllustration from "./MoodIllustration";
 export default function ProductHeader() {
   const { user, logout } = useAuth();
   return (
     <header className="product-header">
       <Link className="brand" to="/">
-        <Flower2 size={27} /> moodgarden<span>®</span>
+        <MoodIllustration size={32} /> moodgarden<span>®</span>
       </Link>
       {user ? (
         <>

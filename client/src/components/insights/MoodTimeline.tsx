@@ -1,3 +1,4 @@
+import MoodIllustration from "../MoodIllustration";
 import { useState } from "react";
 import { MOOD_PLANTS } from "../../../../shared/moods.js";
 import type { InsightData } from "../../services/api";
@@ -58,7 +59,7 @@ export default function MoodTimeline({ data }: { data: InsightData }) {
                       aria-label={detail}
                       style={{ background: config.color }}
                     >
-                      <span aria-hidden="true">{config.emoji}</span>
+                      <MoodIllustration mood={point.mood} size={30}/>
                       <span className="bloom-tooltip" aria-hidden="true">
                         {detail}
                       </span>

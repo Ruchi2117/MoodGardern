@@ -1,3 +1,4 @@
+import MoodIllustration from "../MoodIllustration";
 import { MOOD_PLANTS } from "../../../../shared/moods.js";
 import type { MoodEntry } from "../../services/api";
 import GardenPlant from "../garden/GardenPlant";
@@ -17,7 +18,7 @@ export default function JournalEntryDetail({
     <>
       <span className="small-label">A FEELING YOU PLANTED</span>
       <h2 id="entry-dialog-title">
-        {mood.emoji} {mood.name}
+        <MoodIllustration mood={entry.mood} size={38}/> {mood.name}
       </h2>
       <time dateTime={entry.createdAt} className="entry-full-date">
         {fullDate(entry.createdAt)}

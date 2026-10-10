@@ -9,6 +9,7 @@ import "./journal.css";
 import "./rituals.css";
 import "./insights.css";
 import "./refinements.css";
+import "./forest.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

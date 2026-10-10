@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate, Link, Outlet } from "react-router-dom";
 import Landing from "./Landing";
+import FireflyCursor from "./components/FireflyCursor";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import AuthPage from "./pages/AuthPage";
 import Dashboard from "./pages/Dashboard";
@@ -31,6 +32,8 @@ function ProtectedRoute() {
 export default function App() {
   return (
     <>
+      <FireflyCursor />
+      <div className="forest-atmosphere" aria-hidden="true">{Array.from({length:28},(_,i)=><span key={i} className="forest-firefly" style={{left:`${(i*37+3)%100}%`,top:`${(i*23+17)%100}%`,animationDelay:`${-i*1.7}s`}} />)}</div>
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>
