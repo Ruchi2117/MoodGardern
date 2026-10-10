@@ -2,9 +2,20 @@
 
 [Open the live app](https://moodgarden-ruchi2117.onrender.com) — hosted on Render Free with MongoDB Atlas Free. The service sleeps when inactive, so the first visit may take about a minute. AI chat remains disconnected; the local companion works without a provider.
 
+**MERN assessment submission · React + Node.js + Express + MongoDB · Kiro CLI used**
+
+[Live Demo](https://moodgarden-ruchi2117.onrender.com) · [Kiro Review Evidence](docs/kiro-review.md) · [Architecture Walkthrough](docs/architecture-talk.md)
+
 ## What is MoodGarden?
 
 A cozy mood-tracking and journaling app where your feelings become a little garden. Record a feeling, leave a thought, and take a small moment for yourself. The garden reflects saved check-ins; daily rituals represent gentle acts of care.
+
+## Try it in two minutes
+
+1. Open the live demo and create an account. No installation is required.
+2. Save a mood check-in and watch a plant appear in your garden.
+3. Open Journal to find or edit the saved entry. Complete a daily ritual and explore Insights.
+4. Meet Fern in the pocket garden: rotate the character, customize the companion, and try the local habit chat. Sounds are optional.
 
 ## Features
 
@@ -190,13 +201,13 @@ npm run build
 npm audit --omit=dev
 ```
 
-**55 API tests plus 5 local-chat tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, timezones, production configuration, static routing, companion input/privacy/rate limits, and local habit follow-ups. GitHub Actions runs checks, tests and the production build on pushes and pull requests. New local changes require publishing before remote CI can verify them.
+**55 API tests plus 5 local-chat tests** cover auth/hash exclusion, invalid and expired JWTs, ownership, validation, CRUD, idempotency, concurrent rituals, one-time growth, insights, timezones, production configuration, static routing, companion input/privacy/rate limits, and local habit follow-ups. GitHub Actions runs checks, tests and the production build on pushes and pull requests.
 
 The test runner uses isolated MongoDB instances and never modifies your application database. First use may download MongoDB. Final browser review covered all six page routes at 320, 375, 390, 430, 768, 1024, 1280, and 1440 pixels; keyboard dialogs/focus/Escape; long notes; empty/single/capped gardens; outage retry states; account isolation; and a simulated expired-session response. See [final review](docs/final-review.md) and [responsive measurements](docs/final-responsive-audit.json).
 
 ## Production Deployment
 
-The submission has a **$0 hosting budget**. [Free deployment instructions](docs/free-deployment.md) describe Render Free plus Atlas M0, with no paid resources or payment method. `render.yaml` selects a free single-service Docker deployment. Live provisioning is pending account access; no public URL is claimed yet.
+The submission has a **$0 hosting budget**. [Free deployment instructions](docs/free-deployment.md) describe Render Free plus Atlas M0, with no paid resources or payment method. `render.yaml` selects a free single-service Docker deployment. The app is live at [moodgarden-ruchi2117.onrender.com](https://moodgarden-ruchi2117.onrender.com). Render serves the React build and Express API from one HTTPS origin; Atlas stores application records. The deployed Docker build passed, and public API smoke checks verified registration, login, database-backed session lookup, duplicate-email handling and invalid/missing-token rejection. Direct unauthenticated dashboard navigation redirects to login.
 
 For same-origin deployment, Express serves the built client when `SERVE_CLIENT=true`; leave `VITE_API_URL` empty. For other deployment arrangements:
 
@@ -212,17 +223,29 @@ The auth limiter is process-local: 20 login/registration attempts per IP per 15 
 
 ## AI Development Experience
 
-**Actual tools used: Codex for implementation and verification, plus Kiro CLI 2.27.1 for four final source reviews.** [Kiro evidence](docs/kiro-review.md) includes actual responses, accepted/rejected findings and validation. Kiro reviewed authentication/ownership, retry/concurrency behavior, date/Insight calculations, and deployment configuration. Its suggested prior-day ritual retry test was implemented and passes.
+### Selected assessment tool: Kiro
 
-Five real Codex-assisted tasks performed on this project:
+**Kiro CLI 2.27.1 was used for four genuine final-stage source reviews. Code0 was not used.** Initial implementation and browser verification were assisted by Codex. Kiro's contribution was review and problem finding, rather than generating the initial application. The actual prompts, responses, and decisions are retained in [Kiro review evidence](docs/kiro-review.md).
 
-1. Developed the React garden, check-in, Journal, ritual, and Insights components while preserving the approved botanical design.
-2. Built Mongoose models and Express APIs for authentication, mood CRUD, daily rituals, and computed insights.
-3. Investigated duplicate mood retries and concurrent ritual completion, adding unique indexes and atomic updates.
-4. Added API integration tests and checked ownership, timezones, missing energy, ties, and streak edge cases.
-5. Reviewed accessibility, responsive layouts, async failure states, production configuration, and documentation.
+I used focused review scopes so each response could be checked against the source and tests. I evaluated suggestions before changing code, accepted a missing regression test, and rejected findings that did not match the implementation. This made the tool useful without treating its output as automatically correct.
 
-Generated code was inspected, modified, built, and tested. Browser testing identified real focus, contrast, overflow, and recovery issues which were corrected. Kiro findings were checked against source rather than automatically accepted; the evidence retains its incorrect and self-corrected claims.
+### Four specific Kiro tasks
+
+| Task | How Kiro was used | Outcome |
+| --- | --- | --- |
+| Authentication and ownership review | Reviewed JWT verification, password-hash exclusion, and user-scoped API access. | Checked findings against middleware, models, and tests; rejected an incorrect JWT-subject concern. [Transcript](docs/kiro/auth-review.txt) |
+| Retry and concurrency review | Examined duplicate mood requests, concurrent ritual completion, and missing coverage. | Accepted and implemented a prior-day ritual retry regression test; it confirms a 404 response and unchanged rewards/completion state. [Transcript](docs/kiro/concurrency-review.txt) |
+| Insights and date logic review | Reviewed inclusive periods, DST boundaries, streaks, ties, and missing energy values. | Verified calculations against existing source and tests; no calculation change was required. [Transcript](docs/kiro/insights-review.txt) |
+| Deployment configuration review | Reviewed Docker, Render Free configuration, SPA/API routing, and caching. | Checked recommendations against configuration and routing tests; cloud deployment was verified separately. [Transcript](docs/kiro/deployment-review.txt) |
+
+### Problem solving and verification
+
+- **AI findings:** Kiro raised a JWT-subject issue that source inspection did not support. I retained the existing behavior and preserved the original response for transparency.
+- **Missing regression coverage:** its prior-day ritual retry suggestion became an integration test, protecting against accidental reward updates across dates.
+- **Safe repeated actions:** unique user/request indexes and replay checks prevent duplicate mood saves; atomic ritual updates award care once.
+- **Deployment debugging:** Atlas rejected a connection URI containing leftover password placeholder brackets. Removing those markers resolved authentication; live checks then confirmed MongoDB-backed login and session lookup. No credentials are included in the repository.
+
+The completed application has **55 API tests and 5 local-chat tests**. TypeScript checks, backend checks, and the production build passed. The Kiro evidence records the earlier 48-test review checkpoint separately, rather than presenting later tests as work performed by Kiro.
 
 ## Design Philosophy
 
@@ -243,16 +266,13 @@ Generated code was inspected, modified, built, and tested. Browser testing ident
 - Browser localStorage exposes Bearer tokens to scripts running on the page. HttpOnly-cookie sessions with CSRF protection and server revocation are possible production hardening; copied JWTs currently remain valid until expiry.
 - The optional 3D section adds about 143 kB gzip when it approaches the viewport. It requires WebGL2; unsupported devices get a simpler view. Play actions never create mood entries or ritual rewards. See [3D implementation notes](docs/pocket-garden.md).
 
-## Submission Checklist
+## Submission Readiness
 
-- [x] Core MERN functionality and all 48 API tests
-- [x] Production build and code checks
-- [x] Accessibility/contrast and responsive review
-- [x] Local secrets, database files, dependencies, and generated builds excluded from Git
-- [x] Actual Kiro review evidence required by the assessment
-- [x] Five real showcase screenshots/GIFs and an architecture walkthrough
-- [x] Configure the candidate’s GitHub remote
-- [x] Publish the reviewed repository and verify remote CI
-- [ ] Provision and smoke-test a free public deployment
+- Public repository with source, lockfile, environment examples, and GitHub Actions workflow.
+- Live HTTPS application using Render Free and MongoDB Atlas Free.
+- Setup/run instructions, architectural decisions, and documented limitations.
+- Four specific Kiro tasks with actual review transcripts and a tested accepted suggestion.
+- Five screenshots/GIFs using fictional demo data.
+- Secrets, local database files, dependencies, and generated builds excluded from Git.
 
-Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern). A live deployment is pending Render/Atlas account access. The local project can be reviewed and run with the commands above.
+Repository: [Ruchi2117/MoodGardern](https://github.com/Ruchi2117/MoodGardern).
