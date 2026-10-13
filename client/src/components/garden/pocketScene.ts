@@ -208,6 +208,9 @@ export function createPocketScene(host: HTMLElement, onAction: (action: PocketAc
     const leafPin=new THREE.Group(),flowerPin=new THREE.Group(),plain=new THREE.Group();root.add(leafPin,flowerPin,plain);
     const pin=mesh(leafGeometry(),leafGreen,leafPin,[-.16,.43,.27],[.2,.2,1]);pin.rotation.z=.5;
     for(let i=0;i<5;i++){const a=i/5*Math.PI*2;ball(flowerPin,shirt,[-.16+Math.cos(a)*.035,.45+Math.sin(a)*.035,.28],[.025,.025,.012]);}ball(flowerPin,gold,[-.16,.45,.3],[.018,.018,.01]);
+    leafPin.scale.setScalar(1.8);flowerPin.scale.setScalar(1.8);
+    leafPin.position.set(.128,-.344,.05);flowerPin.position.set(.128,-.36,.05);
+    root.userData.customColors={blue,leafGreen,shoe};
     root.userData.accessories={leaves:plain,mushroom:leafPin,flower:flowerPin};leafPin.visible=flowerPin.visible=false;
     root.traverse(object=>{if(object instanceof THREE.Mesh){object.castShadow=true;object.receiveShadow=true;}});
     root.userData.action='wave';buddies.push({root,arm,head,wrist,eyes});return root;
@@ -417,7 +420,12 @@ export function createPocketScene(host: HTMLElement, onAction: (action: PocketAc
   moods([]);
   const customize=(tint:"moss"|"rose"|"lavender",accessory:"leaves"|"mushroom"|"flower")=>{
     skin.color.setHex({moss:0x91ac75,rose:0xd9aba9,lavender:0xb9a4cc}[tint]);shell.color.copy(skin.color);
-    for(const buddy of buddies){const hats=buddy.root.userData.accessories as Record<string,THREE.Group>;for(const [key,hat] of Object.entries(hats))hat.visible=key===accessory;}
+    for(const buddy of buddies){
+      const colors=buddy.root.userData.customColors as Record<string,THREE.MeshStandardMaterial>;
+      colors.blue.color.setHex({moss:0x70aac5,rose:0xcb809b,lavender:0x9d8bcb}[tint]);
+      colors.leafGreen.color.setHex({moss:0x94b94a,rose:0xb88b73,lavender:0x8d9bac}[tint]);
+      colors.shoe.color.setHex({moss:0x82ac9b,rose:0xbc8a96,lavender:0x9b91b7}[tint]);
+      const hats=buddy.root.userData.accessories as Record<string,THREE.Group>;for(const [key,hat] of Object.entries(hats))hat.visible=key===accessory;}
     wake();
   };
   return { view, act, moods, customize, dispose() {
